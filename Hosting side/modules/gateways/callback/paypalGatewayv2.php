@@ -60,6 +60,7 @@ global $CONFIG;
 			$invoicestatustis = (isset($invoicedasta[0]->status) && !empty($invoicedasta[0]->status))?$invoicedasta[0]->status:"";
 			if($invoicestatustis != "Paid")
 			{
+				checkCbTransID($tranx_id);
 				addInvoicePayment($invoiceid, $tranx_id, $amount, $fee, $gatewaymodule); # Apply Payment to Invoice: invoiceid, transactionid, amount paid, fees, modulename
 			}
 			logTransaction($GATEWAY["name"], $logData, "Successful"); # Save to Gateway Log: name, data array, status
