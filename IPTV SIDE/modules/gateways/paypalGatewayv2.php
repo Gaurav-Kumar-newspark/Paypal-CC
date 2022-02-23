@@ -50,11 +50,11 @@ function paypalGatewayv2_config($params) {
             'Value' => 'Paypal Gateway Module V2',
         ),
         'requestUrl' => array(
-            'FriendlyName' => 'Request URL',
+            'FriendlyName' => 'Hosting Site URL',
             'Type' => 'text',
             'Size' => '100',
             'Default' => '',
-            'Description' => 'Enter your Request Site URL- http://yourwebsite.com',
+            'Description' => 'Enter your Hosting Site URL- http://yourwebsite.com',
         ),
         'returnbackurl' => array(
             'FriendlyName' => 'Return URL',
@@ -64,11 +64,11 @@ function paypalGatewayv2_config($params) {
             'Description' => 'Enter your Request Site URL- http://yourwebsite.com',
         ),
         'companyNamewillbe' => array(
-            'FriendlyName' => 'Company Name',
+            'FriendlyName' => 'Item Name',
             'Type' => 'text',
             'Size' => '100',
             'Default' => '',
-            'Description' => 'Enter Company Name',
+            'Description' => "(  Order's details  that's sending to PayPal , example Hosting  Products Name etc )",
         ),
         // a text field type allows for single line text input
         'reciveremail' => array(
