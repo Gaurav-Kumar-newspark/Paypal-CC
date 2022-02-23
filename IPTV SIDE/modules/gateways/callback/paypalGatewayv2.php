@@ -46,7 +46,7 @@ global $CONFIG;
 		$logData = $globalpost;
 
 		//global $CONFIG;
-		$invoiceid = $globalpost['custom'];
+		$ginvioid = $invoiceid = $globalpost['custom'];
 		$tranx_id = $globalpost['txn_id'];
 		$fee = $globalpost['payment_fee'];
 		$amount = $globalpost['payment_gross'];
@@ -56,7 +56,7 @@ global $CONFIG;
 		if($globalpost['payment_status'] == "Completed")
 		{
 			$invoicestatustis = "";
-			$invoicedasta = Capsule::table('tblinvoices')->where('id', '=', $invoiceid)->get();
+			$invoicedasta = Capsule::table('tblinvoices')->where('id', '=', $ginvioid)->get();
 			$invoicestatustis = (isset($invoicedasta[0]->status) && !empty($invoicedasta[0]->status))?$invoicedasta[0]->status:"";
 			if($invoicestatustis != "Paid")
 			{
