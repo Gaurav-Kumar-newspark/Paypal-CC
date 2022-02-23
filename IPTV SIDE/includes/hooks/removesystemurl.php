@@ -4,11 +4,6 @@
 add_hook('AdminAreaHeadOutput', 1, function($vars) {
 
     if ($vars['filename'] == 'configgeneral') {
-    	if(1 == 1)
-    	{
-
-    		
-        
         Capsule::table('tblconfiguration')->where('setting','SystemURL')->update(['value' => '']);
         Capsule::table('tblconfiguration')->where('setting','domain')->update(['value' => '']);
         
@@ -21,6 +16,5 @@ $(document).ready(function(){
    })
 </script>
 HTML;
-    }
     }
 });
