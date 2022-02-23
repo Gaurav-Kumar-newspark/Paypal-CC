@@ -10,13 +10,13 @@ global $CONFIG;
 
 
 	//Get The Orginal System URL which will be configured in the General Settings
-	$SystemURLFromGeneral = $CONFIG['SystemURL'];
+	/*$SystemURLFromGeneral = $CONFIG['SystemURL'];
 	$bar = "/";
 	if(substr($SystemURLFromGeneral, -1) == "/")
 	{
 		$bar =  "";
 	}
-	$SystemURLFromGeneral = $SystemURLFromGeneral.$bar;
+	$SystemURLFromGeneral = $SystemURLFromGeneral.$bar;*/
 
 	$gatewaymodule = $ModuleName = "paypalGatewayv2"; # Enter your gateway module name here replacing template
 	$GATEWAY = $params = getGatewayVariables($ModuleName); //Fetch Gateway Configuration
@@ -30,6 +30,15 @@ global $CONFIG;
 		$bar =  "";
 	}
 	$requestUrl = $requestUrl.$bar;
+
+	//Fetch Hosting URL(Return Url URL) from the configuration of gateway
+	$SystemURLFromGeneral = (isset($params["returnbackurl"]) && !empty($params["returnbackurl"]))?$params["returnbackurl"]:"";
+	$bar = "/";
+	if(substr($SystemURLFromGeneral, -1) == "/")
+	{
+		$bar =  "";
+	}
+	$SystemURLFromGeneral = $SystemURLFromGeneral.$bar;
 
 	if(isset($globalpost) && !empty($globalpost))
 	{

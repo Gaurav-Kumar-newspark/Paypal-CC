@@ -56,6 +56,13 @@ function paypalGatewayv2_config($params) {
             'Default' => '',
             'Description' => 'Enter your Request Site URL- http://yourwebsite.com',
         ),
+        'returnbackurl' => array(
+            'FriendlyName' => 'Return URL',
+            'Type' => 'text',
+            'Size' => '100',
+            'Default' => '',
+            'Description' => 'Enter your Request Site URL- http://yourwebsite.com',
+        ),
         'companyNamewillbe' => array(
             'FriendlyName' => 'Company Name',
             'Type' => 'text',
@@ -153,8 +160,9 @@ function paypalGatewayv2_link($params)
 		$htmlOutput.= "<input type='hidden'  value='".$InvoiceId."' name='custom'>";
 		$htmlOutput.= "<input type='hidden'  value='utf-8' name='charset'>";
 		$htmlOutput.= "<input type='hidden'  value='2' name='rm'>";
-		$htmlOutput.= "<input type='hidden'  value='WHMCS-BuyNowBF' name='bn'>";
-		$htmlOutput.= "<button type='submit' name='AddPayment2' style='padding: 0px;'><img src='modules/gateways/paypalGatewayv2/images/x-click-but03.gif'></button>";
+        $htmlOutput.= "<input type='hidden'  value='WHMCS-BuyNowBF' name='bn'>";
+		$htmlOutput.= "<input type='hidden'  value='AddPayment2' name='AddPayment2'>";
+		$htmlOutput.= "<button type='submit' name='AddPaymentany' style='padding: 0px;'><img src='modules/gateways/paypalGatewayv2/images/x-click-but03.gif'></button>";
 		$htmlOutput.= '</form>';
 	}
 	else

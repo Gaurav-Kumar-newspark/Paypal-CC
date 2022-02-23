@@ -26,18 +26,18 @@ function paypalGatewayv2_MetaData() {
 }
 
 function paypalGatewayv2_config($params) {
-    $requestUrl = (isset($params["requestUrl"]) && !empty($params["requestUrl"]))?$params["requestUrl"]:"";
-    $ipndata = '<div class="alert alert-danger clearfix" role="alert" style="margin:0;"><i class="fas fa-info-circle fa-3x pull-left fa-fw"></i><div style="margin-left: 56px;"><p><strong>Important. Please add Request URL to get the IPN URL</strong></p> </div></div>';
-    if($requestUrl != "")
-    {
-        $bar = "/";
-        if(substr($requestUrl, -1) == "/")
-        {
-            $bar =  "";
-        }
-        $requestUrl = $requestUrl.$bar;
-        $ipndata = '<div class="alert alert-info clearfix" role="alert" style="margin:0;"><i class="fas fa-info-circle fa-3x pull-left fa-fw"></i><div style="margin-left: 56px;"><p><strong>Important.</strong> Make sure you have setup the IPN on paypal account.</p> <div class="input-group"><span class="input-group-addon">IPN URL</span><input type="text" id="qbcronPhp" value="'.$requestUrl.'modules/gateways/callback/paypalGatewayv2.php" class="form-control" readonly="readonly"><span class="input-group-btn"><button class="btn btn-default copy-to-clipboard" data-clipboard-target="#qbcronPhp" type="button"><i class="fal fa-copy" title="Copy to clipboard"></i><span class="sr-only">Copy to clipboard&gt;</span></button></span></div> </div></div>';
-    }
+	$requestUrl = (isset($params["requestUrl"]) && !empty($params["requestUrl"]))?$params["requestUrl"]:"";
+	$ipndata = '<div class="alert alert-danger clearfix" role="alert" style="margin:0;"><i class="fas fa-info-circle fa-3x pull-left fa-fw"></i><div style="margin-left: 56px;"><p><strong>Important. Please add Request URL to get the IPN URL</strong></p> </div></div>';
+	if($requestUrl != "")
+	{
+		$bar = "/";
+		if(substr($requestUrl, -1) == "/")
+		{
+			$bar =  "";
+		}
+		$requestUrl = $requestUrl.$bar;
+		$ipndata = '<div class="alert alert-info clearfix" role="alert" style="margin:0;"><i class="fas fa-info-circle fa-3x pull-left fa-fw"></i><div style="margin-left: 56px;"><p><strong>Important.</strong> Make sure you have setup the IPN on paypal account.</p> <div class="input-group"><span class="input-group-addon">IPN URL</span><input type="text" id="qbcronPhp" value="'.$requestUrl.'modules/gateways/callback/paypalGatewayv2.php" class="form-control" readonly="readonly"><span class="input-group-btn"><button class="btn btn-default copy-to-clipboard" data-clipboard-target="#qbcronPhp" type="button"><i class="fal fa-copy" title="Copy to clipboard"></i><span class="sr-only">Copy to clipboard&gt;</span></button></span></div> </div></div>';
+	}
 
 
 
@@ -51,6 +51,13 @@ function paypalGatewayv2_config($params) {
         ),
         'requestUrl' => array(
             'FriendlyName' => 'Request URL',
+            'Type' => 'text',
+            'Size' => '100',
+            'Default' => '',
+            'Description' => 'Enter your Request Site URL- http://yourwebsite.com',
+        ),
+        'returnbackurl' => array(
+            'FriendlyName' => 'Return URL',
             'Type' => 'text',
             'Size' => '100',
             'Default' => '',
@@ -91,7 +98,7 @@ function paypalGatewayv2_config($params) {
 
 function paypalGatewayv2_link($params)
 {
-     // Invoice Parameters
+	 // Invoice Parameters
     $invoiceId = $params['invoiceid'];
     $description = $params["description"];
     $amount = $params['amount'];
@@ -119,50 +126,50 @@ function paypalGatewayv2_link($params)
     $whmcsVersion = $params['whmcsVersion'];
 
 
-    $InvoiceId = (isset($params["invoiceid"]) && !empty($params["invoiceid"]))?$params["invoiceid"]:"";
-    $requestUrl = (isset($params["requestUrl"]) && !empty($params["requestUrl"]))?$params["requestUrl"]:"";
-    $PayPalEmail = (isset($params["reciveremail"]) && !empty($params["reciveremail"]))?$params["reciveremail"]:"";
-    $companyNamewillbe = (isset($params["companyNamewillbe"]) && !empty($params["companyNamewillbe"]))?$params["companyNamewillbe"]:"";
-    if($requestUrl != "")
-    {
-        $bar = "/";
-        if(substr($requestUrl, -1) == "/")
-        {
-            $bar =  "";
-        }
-        $requestUrl = $requestUrl.$bar;
-        $newteamwillbe = $companyNamewillbe." - Invoice #".$InvoiceId;
+	$InvoiceId = (isset($params["invoiceid"]) && !empty($params["invoiceid"]))?$params["invoiceid"]:"";
+	$requestUrl = (isset($params["requestUrl"]) && !empty($params["requestUrl"]))?$params["requestUrl"]:"";
+	$PayPalEmail = (isset($params["reciveremail"]) && !empty($params["reciveremail"]))?$params["reciveremail"]:"";
+	$companyNamewillbe = (isset($params["companyNamewillbe"]) && !empty($params["companyNamewillbe"]))?$params["companyNamewillbe"]:"";
+	if($requestUrl != "")
+	{
+		$bar = "/";
+		if(substr($requestUrl, -1) == "/")
+		{
+			$bar =  "";
+		}
+		$requestUrl = $requestUrl.$bar;
+		$newteamwillbe = $companyNamewillbe." - Invoice #".$InvoiceId;
 
-        $htmlOutput = "<form method='post' action='".$requestUrl."paypalrequesting.php'>";
-        $htmlOutput.= "<input type='hidden' value='_xclick' name='cmd'>";
-        $htmlOutput.= "<input type='hidden'  value='".$PayPalEmail."' name='business'>";
-        $htmlOutput.= "<input type='hidden'  value='".$newteamwillbe."' name='item_name'>";
-        $htmlOutput.= "<input type='hidden'  value='".$amount."' name='amount'>";
-        $htmlOutput.= "<input type='hidden'  value='".$firstname."' name='first_name'>";
-        $htmlOutput.= "<input type='hidden'  value='".$lastname."' name='last_name'>";
-        $htmlOutput.= "<input type='hidden'  value='".$email."' name='email'>";
-        $htmlOutput.= "<input type='hidden'  value='".$address1."' name='address1'>";
-        $htmlOutput.= "<input type='hidden'  value='".$city."' name='city'>";
-        $htmlOutput.= "<input type='hidden'  value='".$state."' name='state'>";
-        $htmlOutput.= "<input type='hidden'  value='".$postcode."' name='zip'>";
-        $htmlOutput.= "<input type='hidden'  value='".$country."' name='country'>";
-        $htmlOutput.= "<input type='hidden'  value='".$country."' name='country'>";
-        $htmlOutput.= "<input type='hidden'  value='".$phone."' name='night_phone_a'>";
-        $htmlOutput.= "<input type='hidden'  value='".$phone."' name='night_phone_b'>";
-        $htmlOutput.= "<input type='hidden'  value='".$currencyCode."' name='currency_code'>";
-        $htmlOutput.= "<input type='hidden'  value='".$InvoiceId."' name='custom'>";
-        $htmlOutput.= "<input type='hidden'  value='utf-8' name='charset'>";
-        $htmlOutput.= "<input type='hidden'  value='2' name='rm'>";
+		$htmlOutput = "<form method='post' action='".$requestUrl."paypalrequesting.php'>";
+		$htmlOutput.= "<input type='hidden' value='_xclick' name='cmd'>";
+		$htmlOutput.= "<input type='hidden'  value='".$PayPalEmail."' name='business'>";
+		$htmlOutput.= "<input type='hidden'  value='".$newteamwillbe."' name='item_name'>";
+		$htmlOutput.= "<input type='hidden'  value='".$amount."' name='amount'>";
+		$htmlOutput.= "<input type='hidden'  value='".$firstname."' name='first_name'>";
+		$htmlOutput.= "<input type='hidden'  value='".$lastname."' name='last_name'>";
+		$htmlOutput.= "<input type='hidden'  value='".$email."' name='email'>";
+		$htmlOutput.= "<input type='hidden'  value='".$address1."' name='address1'>";
+		$htmlOutput.= "<input type='hidden'  value='".$city."' name='city'>";
+		$htmlOutput.= "<input type='hidden'  value='".$state."' name='state'>";
+		$htmlOutput.= "<input type='hidden'  value='".$postcode."' name='zip'>";
+		$htmlOutput.= "<input type='hidden'  value='".$country."' name='country'>";
+		$htmlOutput.= "<input type='hidden'  value='".$country."' name='country'>";
+		$htmlOutput.= "<input type='hidden'  value='".$phone."' name='night_phone_a'>";
+		$htmlOutput.= "<input type='hidden'  value='".$phone."' name='night_phone_b'>";
+		$htmlOutput.= "<input type='hidden'  value='".$currencyCode."' name='currency_code'>";
+		$htmlOutput.= "<input type='hidden'  value='".$InvoiceId."' name='custom'>";
+		$htmlOutput.= "<input type='hidden'  value='utf-8' name='charset'>";
+		$htmlOutput.= "<input type='hidden'  value='2' name='rm'>";
         $htmlOutput.= "<input type='hidden'  value='WHMCS-BuyNowBF' name='bn'>";
-        $htmlOutput.= "<input type='hidden'  value='AddPayment2' name='AddPayment2'>";
-        $htmlOutput.= "<button type='submit' name='AddPaymentany' style='padding: 0px;'><img src='modules/gateways/paypalGatewayv2/images/x-click-but03.gif'></button>";
-        $htmlOutput.= '</form>';
-    }
-    else
-    {
-        $htmlOutput = "Sorry for the inconvenience, Please try with another payment method";
-    }
-    return $htmlOutput;
+		$htmlOutput.= "<input type='hidden'  value='AddPayment2' name='AddPayment2'>";
+		$htmlOutput.= "<button type='submit' name='AddPaymentany' style='padding: 0px;'><img src='modules/gateways/paypalGatewayv2/images/x-click-but03.gif'></button>";
+		$htmlOutput.= '</form>';
+	}
+	else
+	{
+		$htmlOutput = "Sorry for the inconvenience, Please try with another payment method";
+	}
+	return $htmlOutput;
 }
 /**
  * Refund transaction.
